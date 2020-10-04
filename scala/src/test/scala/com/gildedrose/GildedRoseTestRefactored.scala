@@ -1,23 +1,21 @@
 package com.gildedrose
 
 import com.gildedrose.TestingUtils.UnitTest
-import com.gildedrose.domain.Item
+import com.gildedrose.domain._
 import org.scalatest.{BeforeAndAfterEach, FunSpec}
 
-class GildedRoseTest extends FunSpec with BeforeAndAfterEach {
+class GildedRoseTestRefactored extends FunSpec with BeforeAndAfterEach {
 
-  var items: Array[Item] = _
-  var gildedRoseApp: GildedRose = _
-  var regularItem, agedBrie, backstagePass, conjured, sulfuras: Item = null
+  var gildedRoseApp: GildedRoseRefactored = null
+  var regularItem, agedBrie, sulfuras, backstagePass, conjured: Item = null
 
   override def beforeEach(): Unit = {
-    regularItem = new Item("Regular", 100, 50)
-    agedBrie = new Item("Aged Brie", 100, 49)
-    backstagePass = new Item("Backstage passes to a TAFKAL80ETC concert", 100, 47)
-    conjured = new Item("Conjured", 100, 50)
-    sulfuras = new Item("Sulfuras, Hand of Ragnaros", 100, 80)
-    items = Array(regularItem, agedBrie, sulfuras, backstagePass, conjured)
-    gildedRoseApp = new GildedRose(items)
+    regularItem = new Item("regular", 100, 50)
+    agedBrie = new AgedBrie( 100, 49)
+    backstagePass = new BackstagePass(100, 47)
+    conjured = new Conjured( 100, 50)
+    sulfuras = new Sulfuras( 100, 80)
+    gildedRoseApp = new GildedRoseRefactored(Array(regularItem, agedBrie, sulfuras, backstagePass, conjured))
   }
 
   describe("When updating a regular item") {
@@ -59,7 +57,7 @@ class GildedRoseTest extends FunSpec with BeforeAndAfterEach {
       gildedRoseApp.updateQuality()
       assert(backstagePass.quality == 48)
     }
-    it(" should increase the quality by 2 when sellIn <= 10 days ", UnitTest) {
+    it(" should increase the quality by 2 when sellIn < 10 days ", UnitTest) {
       backstagePass.sellIn = 10
       gildedRoseApp.updateQuality()
       assert(backstagePass.quality == 49)
