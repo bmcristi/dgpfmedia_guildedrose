@@ -1,5 +1,7 @@
 package com.gildedrose
 
+import com.gildedrose.domain.Item
+
 class GildedRose(val items: Array[Item]) {
 
 
